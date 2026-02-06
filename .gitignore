@@ -1,2 +1,5 @@
-node_modules/
 .env
+.env.local
+node_modules/
+dist/
+.next/
