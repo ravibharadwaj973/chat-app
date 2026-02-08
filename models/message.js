@@ -37,6 +37,13 @@ const messageSchema = new mongoose.Schema(
       ref: "Message",
       default: null,
     },
+    reactions: [
+  {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    emoji: { type: String, required: true },
+    addedAt: { type: Date, default: Date.now }
+  }
+],
     readBy: [{
       user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
       readAt: { type: Date, default: Date.now }
@@ -65,6 +72,7 @@ messageSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 // --- VIRTUAL: Time Ago ---
 messageSchema.virtual('timeAgo').get(function() {
+  if (!this.createdAt) return "just now";
   const seconds = Math.floor((new Date() - this.createdAt) / 1000);
   
   let interval = seconds / 31536000;
@@ -83,6 +91,7 @@ messageSchema.virtual('timeAgo').get(function() {
 
 // --- VIRTUAL: Formatted Date ---
 messageSchema.virtual('formattedDate').get(function() {
+  if (!this.createdAt) return "";
   return this.createdAt.toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',

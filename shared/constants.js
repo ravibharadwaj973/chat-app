@@ -4,10 +4,10 @@ const MESSAGE_EVENTS = {
   SEND_MESSAGE: 'send-message',
   MESSAGE_DELIVERED: 'message-delivered',
   MESSAGE_READ: 'message-read',
-  ADD_REACTION: 'reaction:add',
+  ADD_REACTION: 'add-reaction',
   REMOVE_REACTION: 'reaction:remove',
   REPLY_MESSAGE: 'reply-message',
-  DELETE_MESSAGE: 'message:delete',
+  DELETE_MESSAGE: 'delete-message',
   
   // Server emits these
   NEW_MESSAGE: 'new-message',

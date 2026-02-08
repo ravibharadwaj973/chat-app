@@ -316,9 +316,9 @@ class MessageEventsHandler {
     if (!message || !conversation) return;
 
     // Check if already read by this user
-    const alreadyRead = message.readBy.some(
-      (read) => read.userId.toString() === userId,
-    );
+ const alreadyRead = message.readBy.some(
+  (read) => read.user && read.user.toString() === userId.toString()
+);
 
     if (!alreadyRead) {
       // Update in database
@@ -394,7 +394,7 @@ class MessageEventsHandler {
 
     // Broadcast to conversation
     this.io
-      .to(`conversation:${message.conversationId}`)
+      .to(message.conversationId.toString())
       .emit(MESSAGE_EVENTS.REACTION_ADDED, {
         messageId,
         reaction: newReaction,
@@ -475,6 +475,7 @@ class MessageEventsHandler {
   }
 
   async handleDeleteMessage(messageId, userId, deleteForEveryone = false) {
+    console.log(messageId)
     const message = await Message.findById(messageId);
     if (!message) {
       throw new Error("Message not found");
