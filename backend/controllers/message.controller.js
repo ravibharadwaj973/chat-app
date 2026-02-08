@@ -24,7 +24,7 @@ const sendMessage = async (req, res) => {
       conversationId,
       sender: userId,
       content,
-      type: type || "text",
+      messageType: type || "text",
       mediaUrl,
       repliedTo: repliedTo || null, // Ensure this matches your Schema field name
     });
@@ -231,6 +231,7 @@ const getMessageById = async (req, res) => {
 const deleteMessage = async (req, res) => {
   try {
     const { messageId } = req.params;
+    console.log(messageId)
     const userId = req.user.id;
 
     const message = await Message.findById(messageId);

@@ -90,9 +90,11 @@ app.get("/api/redis/set/:key/:value", async (req, res) => {
     res.status(500).send(err.message);
   }
 });
+
 const socketServer = new SocketServer();
 socketServer.start(5001);
 app.set("socketServer", socketServer);
+
 // --- API ROUTES ---
 app.get("/health", (req, res) => {
   res.status(200).json({
